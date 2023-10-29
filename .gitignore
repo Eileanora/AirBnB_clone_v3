@@ -1,0 +1,8 @@
+.vscode
+__pycache__
+data.json
+local
+draft
+.pyc
+file.json
+test.txt
