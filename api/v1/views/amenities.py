@@ -7,11 +7,21 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', defaults={"amenities_id": None}, strict_slashes=False)
-def amenties():
-    """Retrives list of all amenities objects"""
-    amenities_list = []
-    all_amenities = storage.all(Amenities)
+@app_views.route('/amenities', defaults={"amenity_id": None},
+                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False)
+def amenties(amenity_id):
+    """Retrives list of all amenities objects or \
+a specific amenity object if id is given"""
+    all_amenities = storage.all(Amenity)
 
-@app_views.route('/amenities/<amenities_id>', strict_slashes=False)
-def amenities(amenities_id):
+    if amenity_id is not None:
+        if "Amenity." + amenity_id not in all_amenities.keys():
+            abort(404)
+        amenity = all_amenities.get("Amenity." + amenity_id)
+        return jsonify(amenity.to_dict())
+    else:
+        amenties_list = []
+        for amenity in all_amenities.values():
+            amenties_list.append(amenity.to_dict())
+        return jsonify(amenties_list)
