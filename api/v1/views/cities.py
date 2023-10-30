@@ -31,7 +31,7 @@ def city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """ Deletes a City object """
     city = storage.get(City, city_id)
@@ -76,7 +76,7 @@ def update_city(city_id):
         abort(400, "Not a JSON")
 
     for key, value in request.get_json().items():
-        if key not in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(city, key, value)
     storage.save()
     return make_response(jsonify(city.to_dict()), 200)
