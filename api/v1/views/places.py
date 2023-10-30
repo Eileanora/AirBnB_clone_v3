@@ -9,25 +9,28 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/places', defaults={"place_id": None}, strict_slashes=False)
+@app_views.view.route('/cities/<city_id>/places', strict_slashes=False)
+def places(city_id):
+    """Retrieves the list of all Place objects of a City"""
+
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
+
+    places_list = []
+    for place in city.places:
+        places_list.append(place.to_dict())
+    return jsonify(places_list)
+
+
 @app_views.route('/places/<place_id>', strict_slashes=False)
-def places(place_id):
-    """Retrieves the list of all Place objects \
-or a specific Place object by id"""
+def place(place_id):
+    """Retrieves a Place object"""
 
-    all_places = storage.all(Place)
-
-    if place_id is not None:
-        if "Place." + place_id not in all_places.keys():
-            abort(404)
-
-        place = all_places.get("Place." + place_id)
-        return jsonify(place.to_dict())
-    else:
-        place_list = []
-        for place in all_places.values():
-            place_list.append(place.to_dict())
-        return jsonify(place_list)
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
+    return jsonify(place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
