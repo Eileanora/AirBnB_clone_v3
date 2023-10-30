@@ -6,6 +6,7 @@ Contains the TestCityDocs classes
 from datetime import datetime
 import inspect
 import models
+import pep8
 from models import city
 from models.base_model import BaseModel
 import unittest
@@ -19,7 +20,7 @@ class TestCityDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.city_f = inspect.getmembers(City, inspect.isfunction)
 
-    '''def test_pep8_conformance_city(self):
+    def test_pep8_conformance_city(self):
         """Test that models/city.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/city.py'])
@@ -31,7 +32,7 @@ class TestCityDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_city.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")'''
+                         "Found code style errors (and warnings).")
 
     def test_city_module_docstring(self):
         """Test for the city.py module docstring"""

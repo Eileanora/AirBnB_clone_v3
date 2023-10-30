@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+import pep8
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -29,7 +30,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-    '''def test_pep8_conformance_db_storage(self):
+    def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
@@ -42,7 +43,7 @@ class TestDBStorageDocs(unittest.TestCase):
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")'''
+                         "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
