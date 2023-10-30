@@ -106,15 +106,18 @@ def places_search():
     if "states" in request.json and len(request.json["states"]) > 0:
         for state_id in request.json["states"]:
             state = storage.get(State, state_id)
-            for city in state.cities:
-                for place in city.places:
-                    results.append(place.to_dict())
+            if state:
+                for city in state.cities:
+                    if city:
+                        for place in city.places:
+                            results.append(place.to_dict())
 
     if "cities" in request.json and len(request.json["cities"]) > 0:
         for city_id in request.json["cities"]:
             city = storage.get(City, city_id)
-            for place in city.places:
-                results.append(place.to_dict())
+            if city:
+                for place in city.places:
+                    results.append(place.to_dict())
 
     if "amenities" in request.json and len(request.json["amenities"]) > 0:
         for place in results:
