@@ -6,6 +6,7 @@ Contains the TestPlaceDocs classes
 from datetime import datetime
 import inspect
 import models
+import pep8
 from models import place
 from models.base_model import BaseModel
 import unittest
@@ -19,7 +20,7 @@ class TestPlaceDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.place_f = inspect.getmembers(Place, inspect.isfunction)
 
-    '''def test_pep8_conformance_place(self):
+    def test_pep8_conformance_place(self):
         """Test that models/place.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/place.py'])
@@ -31,7 +32,7 @@ class TestPlaceDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_place.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")'''
+                         "Found code style errors (and warnings).")
 
     def test_place_module_docstring(self):
         """Test for the place.py module docstring"""

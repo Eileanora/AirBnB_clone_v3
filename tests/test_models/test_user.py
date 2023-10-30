@@ -6,6 +6,7 @@ Contains the TestUserDocs classes
 from datetime import datetime
 import inspect
 import models
+import pep8
 from models import user
 from models.base_model import BaseModel
 import unittest
@@ -19,7 +20,7 @@ class TestUserDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.user_f = inspect.getmembers(User, inspect.isfunction)
 
-    '''def test_pep8_conformance_user(self):
+    def test_pep8_conformance_user(self):
         """Test that models/user.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/user.py'])
@@ -31,7 +32,7 @@ class TestUserDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_user.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")'''
+                         "Found code style errors (and warnings).")
 
     def test_user_module_docstring(self):
         """Test for the user.py module docstring"""
