@@ -103,8 +103,19 @@ def places_search():
 
     results = []
 
-    if "states" in request.json and len(request.json["states"]) > 0:
-        for state_id in request.json["states"]:
+    js = request.get_json()
+    if js and len(js):
+        states = request.json.get("states", None)
+        cities = request.json.get("cities", None)
+        amenities = request.json.get("amenities", None)
+
+    if not js or not len(js) or not states and not cities and not amenities:
+        for place in storage.all(Place).values():
+            results.append(place.to_dict())
+        return jsonify(results)
+
+    if states:
+        for state_id in states:
             state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
@@ -112,14 +123,15 @@ def places_search():
                         for place in city.places:
                             results.append(place.to_dict())
 
-    if "cities" in request.json and len(request.json["cities"]) > 0:
-        for city_id in request.json["cities"]:
+    if cities:
+        for city_id in cities:
             city = storage.get(City, city_id)
             if city:
                 for place in city.places:
-                    results.append(place.to_dict())
+                    if place not in results:
+                        results.append(place.to_dict())
 
-    if "amenities" in request.json and len(request.json["amenities"]) > 0:
+    if amenities:
         for place in results:
             place_amenities = []
             for amenity_id in place["amenities"]:
@@ -129,9 +141,5 @@ def places_search():
                 pass
             else:
                 results.remove(place)
-
-    if len(request.json) == 0:
-        for place in storage.all(Place).values():
-            results.append(place.to_dict())
 
     return jsonify(results)
