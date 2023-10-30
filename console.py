@@ -3,6 +3,7 @@
 
 import cmd
 from datetime import datetime
+from models import storage
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -20,6 +21,8 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 class HBNBCommand(cmd.Cmd):
     """ HBNH console """
     prompt = '(hbnb) '
+    classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
     def do_EOF(self, arg):
         """Exits console"""
@@ -107,17 +110,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints string representations of instances"""
-        args = shlex.split(arg)
         obj_list = []
-        if len(args) == 0:
-            obj_dict = models.storage.all()
-        elif args[0] in classes:
-            obj_dict = models.storage.all(classes[args[0]])
+        if arg:
+            args = arg.split(' ')[0]  # remove possible trailing args
+            if args not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            for k, v in storage.all(args).items():
+                if k.split('.')[0] == args:
+                    obj_list.append(str(v))
         else:
-            print("** class doesn't exist **")
-            return False
-        for key in obj_dict:
-            obj_list.append(str(obj_dict[key]))
+            for k, v in storage.all().items():
+                obj_list.append(str(v))
+        
         print("[", end="")
         print(", ".join(obj_list), end="")
         print("]")

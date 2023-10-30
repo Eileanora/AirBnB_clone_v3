@@ -11,7 +11,7 @@ from models.state import State
 @app_views.route('/states/<state_id>', strict_slashes=False)
 def states(state_id):
     """ Retrieves the list of all State objects """
-    all_states = storage.all("State")
+    all_states = storage.all(State)
 
     if state_id is not None:
         if "State." + state_id not in all_states.keys():
@@ -31,7 +31,7 @@ def states(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes a State object """
-    all_states = storage.all("State")
+    all_states = storage.all(State)
     if "State." + state_id not in all_states.keys():
         abort(404)
 
@@ -63,7 +63,7 @@ def update_state(state_id):
     if not request.json:
         abort(400, "Not a JSON")
 
-    all_states = storage.all("State")
+    all_states = storage.all(State)
     if "State." + state_id not in all_states.keys():
         abort(404)
 
