@@ -6,7 +6,6 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 from models.city import City
-import uuid
 
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
