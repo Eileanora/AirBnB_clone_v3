@@ -9,7 +9,7 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.view.route('/cities/<city_id>/places', strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def places(city_id):
     """Retrieves the list of all Place objects of a City"""
 
