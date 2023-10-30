@@ -21,12 +21,12 @@ or a specific User object by id"""
 
         user = all_users.get("User." + user_id)
         return jsonify(user.to_dict())
+    else:
+        user_list = []
+        for user in all_users.values():
+            user_list.append(user.to_dict())
 
-    user_list = []
-    for user in all_users.values():
-        user_list.append(user.to_dict())
-
-    return jsonify(user_list)
+        return jsonify(user_list)
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
