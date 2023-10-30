@@ -26,6 +26,7 @@ a specific amenity object if id is given"""
             amenties_list.append(amenity.to_dict())
         return jsonify(amenties_list)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id):
     """Delete a specific amenity object"""
@@ -37,6 +38,7 @@ def delete_amenity(amenity_id):
     storage.delete(amenity)
     storage.save()
     return make_response(jsonify({}), 200)
+
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
