@@ -30,7 +30,6 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
         self.set_password()
 
-    @password.setter
     def set_password(self):
         """hashes password"""
         if self.password:
