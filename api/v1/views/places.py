@@ -139,9 +139,8 @@ def places_search():
         old_results = results[:]
         results = []
         for place in old_results:
-            for amenity_id in amenities:
-                amenity = storage.get(Amenity, amenity_id)
-                if amenity in place.amenities:
-                    results.append(place)
+            place_amenities = [amenity.id for amenity in place.amenities]
+            if all(amenity in place_amenities for amenity in amenities):
+                results.append(place)
 
     return jsonify([place.to_dict() for place in results])
