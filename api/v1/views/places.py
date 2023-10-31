@@ -132,10 +132,10 @@ def places_search():
                         results.append(place.to_dict())
 
     if amenities:
-        for place in results:
+        old_results = results[:]
+        results = []
+        for place in old_results:
             place_amenities = []
-            old_results = results[:]
-            results = []
             for amenity_id in place["amenities"]:
                 place_amenities.append(amenity_id)
             if all(amenity in place_amenities
