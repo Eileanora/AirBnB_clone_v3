@@ -12,13 +12,13 @@ from models.city import City
 def cities(state_id):
     """ Retrieves the list of all City objects of a State """
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
 
     cities_list = []
     for city in state.cities:
         cities_list.append(city.to_dict())
-    return jsonify(cities_list)
+    return make_response(jsonify(cities_list), 200)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
@@ -28,7 +28,7 @@ def city(city_id):
 
     if city is None:
         abort(404)
-    return jsonify(city.to_dict())
+    return make_response(jsonify(city.to_dict()), 200)
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
