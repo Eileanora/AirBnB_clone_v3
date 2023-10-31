@@ -121,7 +121,7 @@ def places_search():
                 for city in state.cities:
                     if city:
                         for place in city.places:
-                            results.append(place.to_dict())
+                            results.append(place)
 
     if cities:
         for city_id in cities:
@@ -129,7 +129,7 @@ def places_search():
             if city:
                 for place in city.places:
                     if place not in results:
-                        results.append(place.to_dict())
+                        results.append(place)
 
     if amenities:
         old_results = results[:]
@@ -140,6 +140,6 @@ def places_search():
                 place_amenities.append(amenity_id)
             if all(amenity in place_amenities
                    for amenity in request.json["amenities"]):
-                results.append(place.to_dict())
+                results.append(place)
 
-    return jsonify(results)
+    return jsonify([place.to_dict() for place in results])
