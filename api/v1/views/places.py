@@ -134,12 +134,12 @@ def places_search():
     if amenities:
         for place in results:
             place_amenities = []
+            old_results = results[:]
+            results = []
             for amenity_id in place["amenities"]:
                 place_amenities.append(amenity_id)
             if all(amenity in place_amenities
                    for amenity in request.json["amenities"]):
-                pass
-            else:
-                results.remove(place)
+                results.append(place.to_dict())
 
     return jsonify(results)
