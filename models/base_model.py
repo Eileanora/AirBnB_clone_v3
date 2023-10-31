@@ -70,6 +70,10 @@ class BaseModel:
             del new_dict["_sa_instance_state"]
         if "password" in new_dict and models.storage_t == "db":
             del new_dict["password"]
+        if "amenities" in new_dict:
+            new_dict.pop("amenities", None)
+        if "reviews" in new_dict:
+            new_dict.pop("reviews", None)
         return new_dict
 
     def delete(self):
