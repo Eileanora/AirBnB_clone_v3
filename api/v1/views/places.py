@@ -99,7 +99,7 @@ def update_places(place_id):
 def places_search():
     """Search for places objects"""
 
-    if not request.json:
+    if not request.get_json():
         abort(400, "Not a JSON")
 
     results = []
