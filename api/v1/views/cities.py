@@ -12,7 +12,7 @@ from models.city import City
 def cities(state_id):
     """ Retrieves the list of all City objects of a State """
     state = storage.get(State, state_id)
-    if not state:
+    if state is None:
         abort(404)
 
     cities_list = []
