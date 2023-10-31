@@ -4,6 +4,7 @@
 from flask import Flask, make_response, jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.state import State
@@ -135,11 +136,9 @@ def places_search():
         old_results = results[:]
         results = []
         for place in old_results:
-            place_amenities = []
-            for amenity_id in place["amenities"]:
-                place_amenities.append(amenity_id)
-            if all(amenity in place_amenities
-                   for amenity in request.json["amenities"]):
-                results.append(place)
+            for amenity_id in amenities:
+                amenity = storage.get(Amenity, amenity_id)
+                if amenity in place.amenities:
+                    results.append(place)
 
     return jsonify([place.to_dict() for place in results])
